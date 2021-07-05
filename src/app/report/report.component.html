@@ -1,0 +1,82 @@
+<div style="max-width: 20%; padding-left: 35%;  padding-top: 15%;">
+  <div style="padding-left: 30%;">
+    <mat-card>
+      <mat-card-header>
+      <mat-card-title>Select Parameters for Report Generation</mat-card-title>
+      </mat-card-header>
+      
+  <mat-card-content >
+      <form [formGroup]="form">
+
+     <mat-form-field appearance="fill">
+        <mat-label>Select Starting Date</mat-label>
+        <input matInput [matDatepicker]="s_picker" formControlName="startdate">
+        <mat-datepicker-toggle matSuffix [for]="s_picker"></mat-datepicker-toggle>
+        <mat-datepicker #s_picker></mat-datepicker>
+      </mat-form-field>
+      <br>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Select Ending Date</mat-label>
+        <input matInput [matDatepicker]="e_picker" formControlName="enddate">
+        <mat-datepicker-toggle matSuffix [for]="e_picker"></mat-datepicker-toggle>
+        <mat-datepicker #e_picker></mat-datepicker>
+      </mat-form-field>
+      <br>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Select Product Category</mat-label>
+        <mat-select formControlName="productCategoryID">
+        <mat-option *ngFor="let prod of prodcategories" [value]="prod.CategoryID" >{{prod.CategoryName}}
+        </mat-option>
+        </mat-select>
+        </mat-form-field>
+        <br> 
+
+      <button mat-raised-button color="White" (click)="generate(form.value)">Generate Report</button>
+      <br><br>
+      <button mat-raised-button color="White" (click)="download(form.value)">Download Generated Report</button> 
+      </form>
+    </mat-card-content><br>
+    </mat-card>
+  </div>
+
+    <br>
+    <div #print>
+      <div *ngIf="htmlData" style="width: 200%; height: 200%;">
+      <canvas id="canvas"> {{htmlData}} </canvas>
+      </div> <br>
+
+      <div *ngIf="data2" align="center" >
+        <div *ngFor="let data of data2">
+              <table class="table" style="width: 100%; height: 100%;" id="table">
+                <thead class="thead-dark">
+                  <tr colspan="3">
+                    <th>
+                      <b>Product Name:</b> {{data.ProductName}} <br>
+                      <b>Average Ordered Quantity:</b> {{data.AverageQuantityOrdered}}
+                    </th>
+                  </tr>
+                </thead>
+                <thead class="thead-dark">
+                <tr>
+                  <th>Date of Order:</th>
+                  <th>Shipment Date:</th>
+                  <th>Quantity of Order:</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of data.ProductOrders">
+                  <td>{{item.OrderDate}} </td>
+                  <td>{{item.ShippedDate}}</td>
+                  <td>{{item.OrderQuantity}}</td>
+                </tr>
+              </tbody>
+                <br>
+              </table>
+        </div>
+        <h3> Total Average: {{GrandAverage}} </h3>
+      </div>
+      
+    </div>
+</div>

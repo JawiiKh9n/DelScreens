@@ -1,0 +1,13 @@
+<div class="login">
+    
+    
+    <h2 class="login-header">Register For An Account</h2>
+  
+    <form class="login-container" [formGroup]="form">
+    <p><input type="text" placeholder="Enter Full Name" formControlName="Name"></p>
+      <p><input type="email" placeholder="Enter Email Address" formControlName="EmailAddress"></p>
+      <p><input type="password" placeholder="Enter Password" formControlName="Password"></p>
+      <p><input type="submit" value="Register" (click)="register(form.value)"></p>
+      <p><input value="Already have an account? Click here to return to the login page!" (click)="login()"></p>
+    </form>
+  </div>
